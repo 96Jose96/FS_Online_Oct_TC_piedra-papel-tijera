@@ -4,16 +4,7 @@ En este ejercicio, crearemos un juego de "Piedra, Papel o Tijera" utilizando HTM
 
 ## Pasos del ejercicio:
 
-1. En el archivo JavaScript, agrega eventos de clic que permitan al usuario elegir su jugada y comparen el resultado.
-
-2. Genera una jugada aleatoria para el ordenador.
-
-3. Compara la elección del usuario con la elección del ordenador y muestra el resultado en el área de resultados.
-
-4. Actualiza el contador de puntos para el usuario y el ordenador según el resultado.
-
-5. Muestra el resultado en el HTML utilizando `textContent` o `innerHTML`en el div `resultados` 
-
+1. 
 
 
 1. Esto ya está creado: Botones para "Piedra," "Papel" y "Tijera," un área de resultados (`resultados`) y un contador de puntos para el usuario y el ordendador.

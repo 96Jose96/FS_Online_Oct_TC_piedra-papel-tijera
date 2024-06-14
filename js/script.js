@@ -1,46 +1,55 @@
-const arrOption = ['piedra', 'papel', 'tijera'];
-let puntosUsuario = 0;
-let puntosOrdenador = 0;
-const botonJugada = document.querySelectorAll('boton-jugada');
-const resultados = document.getElementById('resultados');
-let contadorUsuario = document.getElementById('contador-usuario');
-let contadorOrdenador = document.getElementById('contador-ordenador');
+/*## Consejos
 
-botonJugada.forEach(button => {
-    botonJugada.addEventListener('click', function() {
-        const jugadaUsuario = botonJugada;
-        const jugadaOrdenador = jugadaOrdenador();
-        const resultado = obtenerResultado (contadorUsuario, contadorOrdenador);
-        mostrarResultado(contadorUsuario, contadorOrdenador, resultado);
-    });
-    
-});
+1. Revisa que es el dataset para acceder al valor de jugada de cada botón
+2. Puedes usar un foreach en cada uno de los botónes
+3. Usa Math.ramdom() para generar aleatoriedad
+4. Adapta el HTML y CSS si lo ves necesario
 
-console.log(botonJugada);
+## La estructura podría ser la siguiente:
 
-function jugadaOrdenador(arrOption) {
-    const aleatorio = arrOption[Math.floor(Math.random() * arrOption.length)];
-    return aleatorio;
+- Opciones en un array
+- Variables puntos usuario
+- Variables puntos ordenador
+- Capturar los botones para usarlos (plantea usar un forEach) y hacer evento click
+- Capturar resultados
+- Capturar contador-usuario
+- Capturar contador-ordenador
+- Crear una función obtenerResultado
+- Crear una función mostrarResultado
+- Crear una función actualizarPuntuacion*/
 
-}
+const arrOptions = ['piedra', 'papel', 'tijera'];
+const buttons = document.querySelectorAll('.jugada');
+const result = document.getElementById('resultados');
+let playerScore = document.getElementById('contador-usuario');
+let machineScore = document.getElementById('contador-ordenador');
 
 
-function obtenerResultado(eleccionUsuario, eleccionOrdenador) {
-    const resultado= '';
-    if (eleccionUsuario === eleccionOrdenador) {
-        resultado = 'empate'
-    } else if ((eleccionUsuario === 'piedra' && eleccionOrdenador === 'tijera') ||
-    (eleccionUsuario === 'tijera' && eleccionOrdenador === 'papel') ||
-    (eleccionUsuario === 'papel' && eleccionOrdenador === 'piedra')) {
-        resultado = 'Ganaste'
+
+
+function move(playerChoice, machineChoice) {
+    if (playerChoice === machineChoice) {
+        return 'Empate';
+    } else if ((playerChoice === 'papel' && machineChoice === 'piedra') ||
+        (playerChoice === 'piedra' && machineChoice === 'tijera') ||
+        (playerChoice === 'tijera' && machineChoice === 'papel')) {
+            return 'Ganaste'
     } else {
-        resultado = 'Perdiste'
-    }
-}   
-
-function mostrarResultado (contadorUsuario, contadorOrdenador, resultado) {
-    resultadosDiv.innerHTML = "<p>ganaste</p>";
+        return 'Perdiste'
+    }   
 }
+
+
+
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        const playerChoice = button.dataset.jugada;
+        const machineChoice = arrOptions[Math.floor(Math.random() * arrOptions.length)];
+        const moveResult = move(playerChoice, machineChoice);
+        result.innerHTML(`<p>Jugador jugó: ${playerChoice}, máquina jugó: ${machineChoice}.¡¡¡${moveResult}!!!</p>`)
+    })
+})
+
 
 
 
