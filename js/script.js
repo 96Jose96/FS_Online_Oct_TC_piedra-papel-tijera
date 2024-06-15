@@ -19,40 +19,61 @@
 - Crear una función actualizarPuntuacion*/
 
 const arrOptions = ['piedra', 'papel', 'tijera'];
-const buttons = document.querySelectorAll('.jugada');
-const result = document.getElementById('resultados');
+const buttons = document.querySelectorAll('.boton-jugada');
+const resultados = document.getElementById('resultados');
 let playerScore = document.getElementById('contador-usuario');
 let machineScore = document.getElementById('contador-ordenador');
 
+let puntosPlayer = 0;
+let puntosMachine = 0;
 
 
-
-function move(playerChoice, machineChoice) {
-    if (playerChoice === machineChoice) {
-        return 'Empate';
-    } else if ((playerChoice === 'papel' && machineChoice === 'piedra') ||
-        (playerChoice === 'piedra' && machineChoice === 'tijera') ||
-        (playerChoice === 'tijera' && machineChoice === 'papel')) {
-            return 'Ganaste'
-    } else {
-        return 'Perdiste'
-    }   
-}
-
-
-
-buttons.forEach(button => {
-    button.addEventListener('click', function() {
-        const playerChoice = button.dataset.jugada;
-        const machineChoice = arrOptions[Math.floor(Math.random() * arrOptions.length)];
-        const moveResult = move(playerChoice, machineChoice);
-        result.innerHTML(`<p>Jugador jugó: ${playerChoice}, máquina jugó: ${machineChoice}.¡¡¡${moveResult}!!!</p>`)
+//EVENTO BOTONES
+buttons.forEach(boton => {
+    boton.addEventListener ('click', function () {
+        const playerMove = boton.dataset.jugada;
+        const machineMove = machineRandomMove();
+        const win = whoWin(playerMove, machineMove);
     })
 })
 
+//MOVIMIENTO ORDENADOR
+function machineRandomMove() {
+    const randomChoice = Math.floor(Math.random() * arrOptions.length);
+    return arrOptions[randomChoice];
+}
 
 
+//FUNCION PARA VER EL GANADOR
+function whoWin(playerMove, machineMove) {
+    if (playerMove === machineMove) {
+        return '¡Empate!'
+    } else if (
+        (playerMove === 'tijera' && machineMove === 'papel') ||
+        (playerMove === 'piedra' && machineMove === 'tijera') ||
+        (playerMove === 'papel' && machineMove === 'piedra')
+    ) {
+        return '¡Ganaste!'
+    } else {
+        return '¡Perdiste!'
+    }
+}
 
+//ACTUALIZAR MARCADORES
+function resultUpdate(win, playerMove, machineMove) {
+    if (win === '¡Ganaste!') {
+        resultados.innerHTLM = `Jugador jugó ${playerMove}, ordenador jugó ${machineMove}. ¡Ganas!`
+        playerScore++;
+    } else if (win === '¡Perdiste!') {
+        resultados.innerHTLM = `Jugador jugó ${playerMove}, ordenador jugó ${machineMove}. ¡Pierdes!`
+        machineScore++;
+    } else {
+        resultados.innerHTLM = `Jugador jugó ${playerMove}, ordenador jugó ${machineMove}. ¡Empate!`
+    }
+}
+
+playerScore.textContent = puntosPlayer;
+machineScore.textContent = puntosMachine;
 
 
 
